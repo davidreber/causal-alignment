@@ -1,0 +1,91 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                   File: OSAmeetings.tex             %
+%                  Date: 20 September 2021            %
+%                                                     %
+%     For preparing LaTeX manuscripts for submission  %
+%       submission to Optica meetings and conferences %
+%                                                     %
+%       (c) 2021 Optica                               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[letterpaper,10pt]{article} 
+%% if A4 paper needed, change letterpaper to A4
+
+\usepackage{osameet3} %% use version 3 for proper copyright statement
+
+%% standard packages and arguments should be modified as needed
+\usepackage{amsmath,amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true,bookmarks=false,citecolor=blue,urlcolor=blue]{hyperref} %pdflatex
+%\usepackage[breaklinks,colorlinks=true,bookmarks=false,citecolor=blue,urlcolor=blue]{hyperref} %latex w/dvipdf
+
+\usepackage[english]{babel}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{workdefinition}{Working Definition}
+\newtheorem{problem}{Problem}
+\newtheorem{example}{Example}
+\newtheorem{remark}{Remark}
+
+% \usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\newcommand\dashto{\mathrel{
+  -\mkern-6mu{\to}\mkern-20mu{\color{white}\bullet}\mkern12mu
+}}
+
+\newcommand\indep{\perp \!\!\! \perp}
+
+\usepackage{graphicx,centernot}
+\newcommand{\CI}{\mathrel{\perp\mspace{-10mu}\perp}}
+\newcommand{\nCI}{\centernot{\CI}}
+
+% Usage
+% $a \CI c \mid b$ and $a \nCI c \mid b$
+
+\newcommand\R{\mathbb{R}}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+\usepackage{dot2texi}
+
+\usepackage{tikz}
+% \usetikzlibrary{shapes,arrows}
+\usetikzlibrary {graphs}
+
+
+
+
+\begin{document}
+
+\title{Inner Alignment through the lens of Causality: Initial Takeaways}
+
+\author{David Reber}
+\address{Columbia University}
+\email{david.reber@columbia.edu}
+%%Uncomment the following line to override copyright year from the default current year.
+\copyrightyear{2022}
+
+
+\begin{abstract}
+abstract
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introduction}
+
+% pdflatex main
+% bibtex main
+% pdflatex main
+% pdflatex main
+
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\section{Appendix}
+
+\end{document}
