@@ -1,0 +1,496 @@
+\documentclass{article}
+\usepackage{blindtext}
+\usepackage[a4paper, total={4.1in, 8in}]{geometry}
+
+%% standard packages and arguments should be modified as needed
+\usepackage{amsmath,amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true,bookmarks=false,citecolor=blue,urlcolor=blue]{hyperref} %pdflatex
+%\usepackage[breaklinks,colorlinks=true,bookmarks=false,citecolor=blue,urlcolor=blue]{hyperref} %latex w/dvipdf
+\usepackage[english]{babel}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{workdefinition}{Working Definition}
+\newtheorem{problem}{Problem}
+\newtheorem{example}{Example}
+\newtheorem{remark}{Remark}
+
+% \usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\newcommand\dashto{\mathrel{
+  -\mkern-6mu{\to}\mkern-20mu{\color{white}\bullet}\mkern12mu
+}}
+
+\newcommand\indep{\perp \!\!\! \perp}
+
+\usepackage{graphicx,centernot}
+\newcommand{\CI}{\mathrel{\perp\mspace{-10mu}\perp}}
+\newcommand{\nCI}{\centernot{\CI}}
+
+% Usage
+% $a \CI c \mid b$ and $a \nCI c \mid b$
+
+\newcommand\R{\mathbb{R}}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+\usepackage{dot2texi}
+
+\usepackage{tikz}
+% \usetikzlibrary{shapes,arrows}
+\usetikzlibrary {graphs}
+
+\begin{document}
+
+
+\begin{definition}[Unique Solvability]
+Let $M=\langle V,U,F,P(U)\rangle$ be an SCM and $\mathbf{Z}\subseteq\mathbf{V}$ a subset of endogenous variables. We say that $M$ is uniquely solvable if for almost every $\mathbf{u}\in\text{dom}(\mathbf{U})$ the equations
+\[
+\mathbf{V} = F(\mathbf{V},\mathbf{u})
+\]
+have a unique solution.
+\end{definition}
+
+Throughout this paper we only need consider uniquely solvable SCMs, which simplifies our definition of potential response.
+
+\begin{definition}[Potential Response]
+Let $M=\langle V,U,F,P(U)\rangle$ be a uniquely solvable SCM. 
+The potential response function is the mapping $\overline{\mathbf{V}}(\mathbf{U}):\text{dom}(\mathbf{U})\to\text{dom}(\mathbf{V})$ which associates each $\mathbf{u}\in\text{dom}(\mathbf{U}$) with the unique solution $\mathbf{v}^*$ of $\mathbf{V} = F(\mathbf{V},\mathbf{u})$.
+\end{definition}
+
+
+\begin{definition}[Simple SCM]
+Let $M=\langle V,U,F,P(U)\rangle$ be an SCM. 
+We call $M$ simple if $M$ is uniquely solvable w.r.t. every subset $\mathbf{Z}\subseteq\mathbf{V}$.
+\end{definition}
+
+The following defintion is adopted from \cite{ReberIntrinsic}.
+\begin{definition}[Lipschitz Matrix]
+Let $M=\langle V,U,F,P(U)\rangle$ be an SCM, with $\text{dom}(\mathbf{U})=\R^m$, $\text{dom}(\mathbf{V})=\R^n$, and $F:\text{dom}(\mathbf{U})\times \text{dom}(\mathbf{V})\to\text{dom}(\mathbf{V})$ differentiable and Lipschitz.
+
+Let $\mathbf{Z}\subseteq\mathbf{V}$ be a subset of endogenous variables.
+For each pair of vertex indices $i$, $j\in\mathbf{Z}$, define
+\[
+a_{ij} = \sup_{\mathbf{u},\mathbf{v}} \left\lvert\frac{\partial f_i}{\partial v_j}(\mathbf{u},\mathbf{v})\right\rvert
+\]
+We call the matrix $A_{\mathbf{z}}=[a_{ij}]_{i,j\in\mathbf{Z}}$ the Lipschitz matrix of $F_\mathbf{Z}$.
+
+When $\mathbf{Z}=\mathbf{V}$, we simply call $A=[a_{ij}]$ the Lipschitz matrix of $F$.
+\end{definition}
+
+The matrix $A$ can be viewed as a collection of Lipschitz constants along the dirction of each partial derivative.
+
+\begin{definition}[stable-Lipschitz SCM]
+Let $M=\langle V,U,F,P(U)\rangle$ be an SCM with causal diagram $G$. 
+We say $M$ is stable-Lipschitz if, for every strongly connected component $\mathbf{Z}$ of $G$, the following conditions hold:
+\begin{itemize}
+  \item $F_{\mathbf{Z}}$ is differentiable and Lipschitz.
+  \item $\rho(A_\mathbf{Z})<1$.
+\end{itemize}
+\end{definition}
+
+No constraints are placed on components of $F$ which are not part of strongly connected components of $G$. This immediately implies the following:
+
+\begin{theorem}[acylic $\subset$ stable-Lipschitz] \label{acyclic-subset}
+Let $M$ be an acyclic SCM. Then $M$ is stable-Lipschitz.
+\end{theorem}
+
+\begin{theorem}[Closed under Interventions] \label{int-closed}
+Let $M$ be a stable-Lipshitz SCM, $\mathbf{X}\subseteq\mathbf{V}$, and $\mathbf{x}\in\text{dom}(\mathbf{X})$. Then $M_{\text{do}(\mathbf{X}=\mathbf{x})}$ is stable-Lipschitz.
+\end{theorem}
+
+\begin{lemma}[Unique Solvability] \label{unique-solvable}
+Let $M$ be a stable-Lipschitz SCM. Then $M$ is uniquely solvable.
+\end{lemma}
+
+\begin{theorem}[stable-Lipschitz $\subset$ simple] \label{simple-subset}
+Let $M$ be a stable-Lipschitz SCM. Then $M$ is simple.
+\end{theorem}
+
+
+
+
+
+\color{red} New Results \color{black}
+
+
+\begin{lemma}[Injectivity] \label{injective}
+Let $M$ have structural functions of the form $F(\mathbf{V},\mathbf{U})=H(\mathbf{V})+\mathbf{U}$ (additive noise). Furthermore, assume that for every ancestral $\mathbf{W}\subseteq \mathbf{V}$, 
+\begin{itemize}
+  \item $F_{\mathbf{W}}$ is Lipschitz
+  \item $\text{det}(I_{|\mathbf{W}|}-A_\mathbf{W})\neq 0$ (uniquely solvable)
+\end{itemize}
+Then $h_\mathbf{V}:=\mathbf{V}-H(\text{Pa}(\mathbf{V}))$ is injective for ancestral $\mathbf{W}\subseteq\mathbf{V}$.
+\end{lemma}
+
+\begin{lemma}[Intrinsic Stability] \label{intrinsic-stability}
+Let $A$ be a Lipschitz matrix for differentiable $H(\mathbf{V})$. Then $\rho(A)<1$ implies $\rho(\frac{dK}{d\mathbf{V}}(\mathbf{v}))<1$ for all $\mathbf{v}\in\mathbf{V}$.
+\end{lemma}
+
+\begin{theorem}[Observational dGMP] \label{thrm:obs}
+Let $M$ be stable Lipschitz with 1. structural equations of the form $F(\mathbf{V},\mathbf{U})=H(\mathbf{V})+\mathbf{U}$ (additive noise), 2. each $U_i\cap U_j=\emptyset$ for $i\neq j$ (independent noise), and 3. $P_M(\mathbf{V})$ has density according the the Legesgue measure on $\R^{|\mathbf{V}|}$ (positivity). 
+
+Then $M$ satisfies the directed global Markov property.
+\end{theorem}
+
+\begin{remark}
+I am confident that conditions 1 and 2 in the hypothesis can be substantially weakened with further research.
+
+This is a very new result, so while I believe the proof to be accurate and comprehensive, I'm still vetting it for errors: I'd place 5:1 odds against finding an irrecoverable error in the proof. 
+\end{remark}
+
+\begin{corollary}[Adjustment Formula] \label{adjustment}
+Let $M$ be as (before) and $Q=P(y|do(x))$ a causal query. If the BDC is satisfied, then $Q$ can be found via backdoor adjustment.
+\end{corollary}
+
+\begin{remark}
+One of the motivations for weakening the condition of independent noise is to be able to similarly prove that the front-door criteria is also valid.
+\end{remark}
+
+\begin{theorem}[Interventional dGMP] \label{thrm:int}
+Let $M$ be as in Theorem \ref{thrm:obs}. For any $\mathbf{X}\subseteq \mathbf{Z}$, $M_{\text{do}(\mathbf{X}=\mathbf{x})}$ satisfies the directed global Markov property.
+\end{theorem}
+
+\begin{theorem}[Closure under Twin Operation] \label{twin}
+Let $M$ be stable-Lipschitz. Then $M^{\text{twin}}$ is also stable-Lipschitz.
+\end{theorem}
+
+\begin{conjecture}[Counterfactual dGMP] \label{thrm:counter}
+Let $M$ be stable-Lipschtiz. Then the counterfactual distributions of $M$ satisfy the directed global Markov property relative to the corresponding twin network.
+\end{conjecture}
+
+\begin{remark}
+I believe the counterfactual dGMP holds if the condition of independent noise can weakened, as an immediate consequence of the other results so far. However, I would place 2:1 odds that I'm missing some additional aspect of the proof.
+\end{remark}
+
+\end{document}
+
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %                   File: OSAmeetings.tex             %
+% %                  Date: 20 September 2021            %
+% %                                                     %
+% %     For preparing LaTeX manuscripts for submission  %
+% %       submission to Optica meetings and conferences %
+% %                                                     %
+% %       (c) 2021 Optica                               %
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \documentclass[letterpaper,10pt]{article} 
+% %% if A4 paper needed, change letterpaper to A4
+
+% \usepackage{osameet3} %% use version 3 for proper copyright statement
+
+% %% standard packages and arguments should be modified as needed
+% \usepackage{amsmath,amssymb}
+% \usepackage[colorlinks=true,bookmarks=false,citecolor=blue,urlcolor=blue]{hyperref} %pdflatex
+% %\usepackage[breaklinks,colorlinks=true,bookmarks=false,citecolor=blue,urlcolor=blue]{hyperref} %latex w/dvipdf
+% \usepackage[english]{babel}
+% \newtheorem{theorem}{Theorem}
+% \newtheorem{corollary}{Corollary}
+% \newtheorem{lemma}[theorem]{Lemma}
+% \newtheorem{conjecture}{Conjecture}
+% \newtheorem{definition}{Definition}
+% \newtheorem{workdefinition}{Working Definition}
+% \newtheorem{problem}{Problem}
+
+% \usepackage{color}
+% \newcommand\dashto{\mathrel{
+%   -\mkern-6mu{\to}\mkern-20mu{\color{white}\bullet}\mkern12mu
+% }}
+
+% \newcommand\indep{\perp \!\!\! \perp}
+
+% \usepackage{caption}
+% \usepackage{subcaption}
+
+% \usepackage{tikz} 
+
+
+
+% \begin{document}
+
+% \title{Research Corral}
+
+% \author{David Reber}
+% \address{Columbia University}
+% \email{david.reber@columbia.edu}
+% %%Uncomment the following line to override copyright year from the default current year.
+% \copyrightyear{2022}
+
+
+% \begin{abstract}
+% abstract
+% \end{abstract}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \section{Notes about cyclic models}
+% Foundations of structural causal models with cycles and latent variables
+% Published October 2021, with one of the top researchers as an author, so likely comprehensive
+
+% Primary Goal: to craft a “spectrum” of generalizations, and show where on the spectrum nice properties have been proven to either hold or not hold.
+
+% Generalizations, or other family of SCMs
+% Format: name of generalization [pages 2-5, 34-41]
+% Rough notes about the generalization (possibly including what properties hold and don’t hold)
+% Also any notes about which other generalizations this one subsumes
+% Simple SCMs [2887, 2911…]
+% [page 2887] We introduce the class of simple SCMs…for which most of these technical complications are absent and which preserves much of the simplicity of the theory for acyclic SCMs. 
+% A simple SCM is an SCM that is uniquely solvable with respect to every subset of the variables. 
+% Because of this strong solvability assumption, simple SCMs have all the convenient properties (i)–(vi): 
+% they always have uniquely defined observational, interventional and counterfactual distributions; 
+% we can perform every perfect intervention and marginalization on them and the result is again a simple SCM; 
+% marginalization does respect the latent projection; 
+% they obey the general directed global Markov property, and for special cases (including the acyclic, linear and discrete case) they obey the (stronger) directed global Markov property; 
+% their graphs have a direct and intuitive causal interpretation
+% Several recent results (generalizations of the do-calculus, adjustment criteria and an identification algorithm) for modular SCMs [18, 19] directly apply to the subclass of simple SCMs
+%  Finally, many causal discovery algorithms that have been designed for the acyclic case also apply to simple SCMs with no or only minor changes
+% Modular SCMs [?]
+% An SCM together with an additional structure of a compatible system of solution functions
+% For modular SCMs, a marginalization can be defined that preserves the probabilistic and causal semantics.
+% But the authors prove this added structure is not necessary, and use a local unique solvability condition instead.
+% Unique solvability condition [2887]
+% Under this condition, we show that an SCM and its marginalization are observationally, interventionally and counterfactually equivalent on the remaining endogenous variables
+% For the graph, this becomes a local ancestral unique solvability 
+% Analogously, we define a marginalization operation
+% on the associated graph of an SCM, which generalizes the latent projection [14, 71, 73]. In general, the marginalization of an SCM does not respect the latent projection of its associated graph, but we show that it does so under an additional local ancestral unique solvability condition.
+% Under certain ancestra unique solvability conditions the causal interpretation of SCMs is consistent with its graph
+% Discrete [2886]
+% Linear [2886]
+% Equivalence classes [2886]
+% Based on having same obs/int/cnt distributions, or having the same solutions (ie. when a function is constant in one of its arguments)
+
+% Properties
+% Format: name of property [pages 6-7, 42-47]
+% Rough notes about the property (possibly including what generalizations it holds or doesn’t hold in generally)
+% Also any notes about which other properties this property implies
+% Having a solution
+% Same as “Measurability of solution functions of cyclic SCMs”?
+% Same as “technical complications related to solvability issues” [2887]?
+% Closed under perfect interventions
+% Inducing unique observational, interventional, counterfactual distributions
+% Existence of a marginalization
+% (same as “closed under marginalizations”?)
+% If it exists, then whether it respects the latent projection
+% Satisfying the Markov property
+% (This is what allows one to read off conditional independencies in a distribution directly from a graph)
+% One prominent example being d-separation, aka “directed global Markov property”
+% But we can define a global directed Markov property in terms of $\sigma$-separation instead
+% But again, they only hold under certain unique solvability conditions
+% Or, obeying various equivalent extensions of the Markov property
+% The graph is consistent with the causal semantics
+
+% Other notes:
+% we can’t always “rollout” in time to get an acyclic causal structure
+% If we approximate the system over time
+% When we describe the equilibrium state of the system
+% Even if one starts with a cyclic SCM that is uniquely solvable, performing an intervention on the SCM may lead to an intervened SCM that is not uniquely solvable [2886]
+% And whether or not this happens may depend on the intervention
+% The concepts of “observationally equivalent”, “interventionally equivalent”, “counterfactually equivalent” SCMs are formulated in such a way that they also apply to cyclic SCMs that have either no solution at all or have multiple different induced probability distributions on the variable
+% So we can still talk about the causal hierarchy
+% Definition 2.6 (Parent):
+% I think it boils down to “it’s a parent if you can’t model without it”
+% Does Defn. 2.1 restrict us to Markovian SCMs? Surely not…
+% But by specifying that the $P_epsilon$ is a product measure, isn’t it saying the exogenous terms are independent?
+% See footnote 6 on ate 2891; it would seem so! 
+% But Example D.6 should explain more on why it’s ok. They claim it’s always possible to refactorize the exogenous distribution so it’s independent WLOG…
+% (So yes, check out Example D.6 to figure out how to represent confounders)
+% Based on Definition 2.7, I’m pretty sure this can handle confounders
+% I reconcile this with the footnote 6 on page 2891, by reinterpreting the footnote to be about “confounders of the exogenous variables themselves”
+% ...Yep, validated on page 2893, after Defn 2.9
+% Note that the way parents are defined (Defn. 2.6) implies that we can’t have “vacuous” edges!! (see page 2892)
+% This is different from Pearl, or at least how Elias introduced it.
+% Also, parents include exogenous variables
+% But, there always exists a structurally minimal SCM (Defn 2.10)
+% So even if an SCM had a vacous dependence, there’s another SCM in its equivalence class without that dependence, which will behave identically in all the ways we care about.
+% Defn 2.12: a Perfect intervention is just the usual atomic intervention.
+% For an SCM, it means replacing the function with a constant value
+% For a graph, it means deleting all incoming edges (including bidirected edges)
+% But what’s weird in cyclic models, is that intervening can make it so no solutions exists (or that one exists where none existed before).
+% If the structural equations have a unique solution, then a unique observational distribution is induced. But in general there will not be a unique distribution induced after a perfect intervention.
+% Twin SCM (Defn 2.17): merely duplicates all the endogenous variables and their dependencies
+% Just as you would expect from the twin network (here called a twin graph)
+% Twin Graphs (Defn 2.18) are with respect to some subset of variables (for sure all endogenous variables, but also some exogenous variables) only duplicates that subset
+% The meaning/intuition of Definition 3.1 (Solvability)
+% It seems like just setting g_O to be the subfunctions corresponding to O is enough to get it, always. So how is this definition constraining?
+% This is true precisely when f_O does not depend on O; that is, when the component does not have any “self-cycles”.
+% How Theorem 3.6 is “w.r.t any subset” …since it seems like it’s only with respect to a particular O…
+% Maybe Prop 3.7’s intuition can generalize? Namely, that the SCM is uniquely solvable w.r.t a subset O if and only if that subcomponent has no “self-cycles” back to itself.
+% In other words, that the subcomponent can be fully determined by its inputs.
+% This has got to be the way to understand solvable w.r.t a subset: the only 
+% Solvability simply means that that subset of variables can be determined by their parents (?). Unique solvability means that the subset of variables is uniquely determined by their parents (Confident).
+% If I understand right, Theorem 3.6 (Unique Solvability) implies that if the structural equations F have a unique solution, then there is a unique observational distribution
+% Detailed read-through: I’m on Section 4
+
+% Research ideas (barf list)
+% I think I can extend Theorem 6.3 part 1(c) to intrinsically stable
+% I think I can generalize the nice results of simple SCMs to Lipscitz stable
+% How would this relate to modular SCMs?
+% The last paragraph of page 2911 (pdf-page 27):
+% Perhaps I can replace the phrase “simple SCMs” to “Lipschitz-stable SCMs”
+% If an intrinsically stable system has a self loop, then it is still uniquely solvable?
+% Wouldn’t this be in direct contradiction to Prop 3.7? 
+% Perhaps look at proof
+% Conjectures
+% Conjecture 1: I can replace “linear” in Theorem 6.3 part 1(c) with “intrinsically stable”
+% Which means d-separation is guaranteed to hold in an broad non-linear, cyclic setting
+% Conjecture 2: Every intrinsically-stable SCM is simple.
+% Conjecture 2a: No intrinsically-stable SCM has self-cycles (by the definition provided in this paper).
+% Conjecture 3: For all simple SCMs, there is an intrinsically-stable SCM equivalent to it.
+% So even though the set of “intrinsically stable SCMs” is contained within the set of “simple SCMs”, it’s broad enough to capture everything we care about.
+% (I expect this won’t hold in general, but I do expect it to hold for all continuous, smooth, or otherwise “nice” SCMs; aka all the ones practitioners would actually care about)
+% Conjecture 4: Equivalence is preserved under isospectral transformation.
+% This means we can use any isospectral transformation to change the graph into one that is easier to analyze.
+% I think the usefulness of Conjectures 2 and 3 are dependent on the validity of Conjecture 1. Conjecture 4 seems less important than Conjecture 1, but may still have independent usefulness.
+
+% Confusions
+% Why aren’t all linear SCMs also simple SCMs?
+% In particular, what does the inclusion of self-loops break?
+% Unique solvability…
+% Which means not having a unique solution
+% Is the set of intrinsically-stable SCMs a subset of modular SCMs?
+% What does “a $P_\epsilon$-null set” mean??
+% Ohh, I think it means “a measure-0 set with regard to the $P_\epsilon$ measure”
+% Since $P_\epsilon$ is the distribution over the exogenous variables
+% Why can intervening make it so a solution no longer exists (or now does exist where it didn’t)?
+% It seems to me that if we restrict the intervention value to be within the set of values that variables can take on at equilibria, then a solution will always exists…
+% Yet Example 2.16 seems to contradict this. In particular, adding do({4},1) shouldn’t make one appear, right??
+% What does the inclusion of self-loops break?
+% Any variables with self-loops are not uniquely determined by the inputs from the rest of the system.
+% Which is bad because…then the structural equation corresponding to that variable may not have a unique solution (in terms of what, solvability)
+% And probably, then the observational distribution will not be unique, I believe (at least in general).
+% The actual quote: “This implies that an SCM with a self-cycle at an endogenous variable in its graph can be either solvable, or not solvable, w.r.t. that variable”
+% So we just don’t know if it’s solvable
+% But it is for sure not “uniquely solvable”!
+% This is crazy to me. 
+% In particular, it seems to violate theorem 3.6 for the simple example of x_1 = f_1(x_1,x_2) = ½ x_1
+% This has a unique solution of x_1 = 0, for all $e\in \epsilon$ and $x_o$
+% The dependence of x_1 on itself is not trivial (I think?)
+% Or in this example is x_1 actually not a parent of itself?
+% Does there exist a measurable function g from $V_\{1\}$ to X_1 such that for all exogenous values e and all $v \in V$, the implications of Def. 2.6 hold?
+% I really don’t think so…
+% If I’m right, then x_1 is indeed it’s own parent. 
+% A very brief look at the linear section suggests that for this example the spectral radius of B_LL <1. 
+% But it’s worth combing through the linear appendix more closely.
+% Trying to understand the linear situation
+% Why is B_ii ==1 if self-cycle?
+% Couldn’t it be any nonzero value?
+% Are they requiring this for convenience, so that the spectral radius of B will always be less than 1?
+% I think there’s some serious conflict between the linear result (which says my example is uniquely solvable w.r.t x_1) and the general result (which still seems to read that it’s not uniquely solvable).
+% Summary of the situation
+% Consider the simple example of x_1 = f_1(x_1,x_2) = ½ x_1
+% This is a linear system. Since the spectral radius of B is less than 1, it is uniquely solvable (by the remark in the appendix)
+% Indeed, it seems that condition 1 of theorem 3.6 is also satisfied, as the unique solution is x_1 = 0, for all $e\in \epsilon$ and $x_o$.
+% In particular, this only depends on the value of x_1, not on any other variables
+% However, Prop. 3.7 explicitly states that the SCM should not be uniquely solvable w.r.t x_1 because x_1 has a self-cycle.
+% They claim this follows directly from combining the definitions of parent, graph, and uniquely solvable.
+% Ways this confusion could be resolved:
+% X_1 does not actually count as its own parent in this case.
+% As in, WLOG x_1 can be expressed as a direct measurable function of the other variables
+% => this case is uniquely solvable
+% I currently think this is the most likely outcome. I’ll push here.
+% Either construct a measurable function g for this example, or prove it can’t be done.
+% The spectral radius of B is not actually less than 1
+% For example if I misunderstand what B_LL is, or the other values of the SCM matter more than I thought
+% => this case is not uniquely solvable
+% I misunderstand the definition of a “solution”, as used in Theorem 3.6, in such a way that x_1 = 0 does not satisfy condition 1
+% => this case is not uniquely solvable
+% What difference does it make?
+% If my example is uniquely solvable, then that means that Lipshitz stable SCMs are probably a subset of simple SCMs.
+% Because I think they would all be uniquely solvable, and I bet all subsets of them too.
+% But they would still have nice properties of linear SCMs, that simple SCMs don’t have
+% What nice properties exactly?
+% If my example is not uniquely solvable, then I think that means that Lipschitz stable SCMs would be exploring a direction. 
+% And I would expect them to have nice properties that linear systems have, but that simple SCMs don’t have.
+% Again, what nice properties?
+% What nice properties do linear SCMs have? 
+% Every marginalization of the SCM respects the latent projection
+% Simple also has this
+% What nice properties do simple SCMs have?
+% Closed under marginalization
+% And the marginalization respects the latent projection
+% Closed under perfect intervention
+% Closed under the twin operation
+% The observational distribution, interventional distribution, and counterfactual distributions all exist and are unique
+% They satisfy the general directed global Markov property (sigma-separation) relative to (each of the G’s).
+% This means that the solutions always satisfy the conditional independencies implied by σ -separation
+% They also satisfy d-separation if M satisfies at least one of the three conditions
+% We can define the causal relationships for simple SCMs in terms of its graph
+% (the graph can be interpreted as having causal semantics)
+% Potential outcomes can be defined similarly to acyclic SCMs.
+% What properties do I conjecture Lipschitz stable SCMs to have?
+
+
+% Uniquely solvable w.r.t every subset
+% Would mean it’s a subset of simple SCMs
+% And thus inherit all the SCMs nice properties
+% I will update based on the answer for the example above
+% Satisfies the general directed global Markov property (sigma-separation criterion) [see Theorem 6.3]
+% Satisfies the directed global Markov property (d-separation criterion)  [see Theorem 6.3] if:
+% Each of its causal mechanisms has a nontrivial dependence on at least one exogenous variable, and $P_epsilon$ has a density w.r.t the Lebesgue measure on R^J.
+% In short, Theorem 6.3 (1c) can be weakened to “it’s Lipschitz-stable and …”
+% I think maybe the claim that there’s a self-loop in the linear case iff B_ii=1 maybe isn’t a typo: that there really is a way to remove the loop. Could this be the “removal of self-loops” trick in the cited paper by Hyttinen, Eberhardt, and Hoyer?
+% ...so this would indicate that lipschitz SMCs really are simple.
+
+
+
+
+% What sort of stuff could I send in my research update?
+% Lit review
+% Highlighting what issues can arise when cycles are introducted
+% Covering how d-separation breaks down, how to get around it
+% sigma -separation is a weaker version
+% What results have been proven for which classes of SCMs
+
+
+
+
+% \color{red} TODO: Read paper Elias sent me. Start skimming other papers. \color{black}
+
+% \section{Thoughts about ``Settable Systems"}
+% \subsection{Abstract, Intro, and Initial thoughts}
+% \begin{itemize}
+%   \item Testing the citation: \cite{JMLR:v10:white09a}
+%   \item ``an extension of the PCM that permits causal discourse in systems embodying optimization, equilibrium, and learning"
+%   \item Question: Why this way to generalize? (Does Elias endorse this method over other alternative ways to generalize? If so, why?)
+%   \item (Surely Elias doesn't mean for me to just translate their results into SCM language...but I have a weak suspicion that his d-seperation claim might already be covered by this paper? ...Well, I suppose if so, I could focus on how to get around that. That does seem more like something he would like - showing how his favorite modeling approach can overcome an issue another researcher claimed it had).
+%   \item ``the PCM’s common treatment of attributes and background variables rules out a causal role for background variables. Specifically, this rules out structurally exogenous causes, whether observed or unobserved". Sorry, how do PCM's do this? And even if they do, how is the way they do it problematic?
+%   \item ``Because learning is based on principles of optimization (least squares), our discussion relates to decision problems generally". It isn't clear to me how being able to do well on least squares means it does well on decision problems in general.
+%   \item Q: How is partitioning an analog of the do-operator? (and by submodel, do they just mean the SCM $M_x$ with $f_x$ replaced?)
+%   \item ``An interesting feature of stochastic settable systems is that attributes can determine the governing probability measure. In contrast, attributes are random variables in the PCM". Say what now??
+% \end{itemize}
+
+% \subsection{Section 2: Pearl's Causal Model}
+% \begin{itemize}
+%   \item (connection to intrinsic stability?) If the requirement of a single fixed point per $u$ is so crucial for the PCM, I wonder if we could get that using Webb's idea of Lipschitz bounds over a partition of the domain? (this approach is parametric, then).
+%   \item ``We refer to the elements of u and v as system `units.'"...I'm confused, is a unit here the same as the unit-level stuff encountered when we talk about counterfactuals, or is it a different meaning?....Ok, I'm pretty sure it's the same: just the value that $u$ can take on, i.e. $U=u$.
+%   \item I think the meaning of the `unique fixed point' requirement is that if I fix $U=u$, all values of the variables $V$ converge to something. This is trivially satisifed in an acyclic SCM, which is why it seems a little unintuitive. 
+%   \item \textbf{So if I understand right, not having the `unique fixed point' requirement would be like fixing $U=u$, and the evaulation of the functions yields a periodic orbit....but I think this requires having initial values for the $V$ variables, prior to the evaluation following $U=u$??}
+% \end{itemize}
+
+% \subsection{Section 3: Machine Learning, the PCM, and Settable Systems}
+% \begin{itemize}
+%   \item I think the first-order conditions here, are KKT conditions?
+%   \item `clamped' means `set to an arbitrary fixed value'. So it just means `fixed'.
+%   \item I don't see how the fixed point requirement fails for the clamped example, and it seems important to understand
+%   \item is `setting' the same as an intervention? Seems kinda not,...
+%   \item What is the meaning of an implicit causal relationship?
+%   \item Opinion: `dual roles' feels like cheating, like they should be different variables. Maybe you can always decompose it that way?
+%   \item I think the $X_0$ constructed for the regression-with-clamping feels very artificial.
+%   \item 
+% \end{itemize}
+
+% \newpage
+% \begin{itemize}
+%   \item 
+% \end{itemize}
+
+% \bibliographystyle{plain}
+% \bibliography{refs}
+
+% \end{document}
